@@ -15,7 +15,8 @@ test('delivers all portfolio sections on one HTML page', () => {
     previous = current;
   }
   assert.ok(!html.includes('/projects/'));
-  if (html.includes('>YOUR NAME<')) assert.match(html, /<meta name="robots" content="noindex"/);
+  assert.doesNotMatch(html, /<meta name="(?:robots|googlebot)"[^>]*content="[^"]*\bnoindex\b/i);
+  assert.match(read('404.html'), /<meta name="robots" content="noindex"/);
 });
 
 test('distributes raw static files with portable entry asset paths', () => {
@@ -29,4 +30,5 @@ test('distributes raw static files with portable entry asset paths', () => {
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1];
   assert.ok(canonical?.startsWith('https://'));
   assert.ok(read('sitemap.xml').includes('<loc>' + canonical + '</loc>'));
+  assert.ok(read('robots.txt').includes('Sitemap: ' + canonical + 'sitemap.xml'));
 });
