@@ -1,0 +1,25 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import ProjectShowcase from '../components/projects/ProjectShowcase.astro';
+import ProfileSections from '../components/home/ProfileSections.astro';
+import Contact from '../components/home/Contact.astro';
+import { profile } from '../content/profile';
+import { absoluteUrl } from '../lib/urls';
+
+const homepage = absoluteUrl(Astro.site);
+const personId = homepage + '#person';
+const structuredData = [
+  { '@type': 'WebSite', url: homepage, name: profile.seo.title },
+  ...(profile.name ? [
+    { '@type': 'ProfilePage', url: homepage, mainEntity: { '@id': personId } },
+    { '@type': 'Person', '@id': personId, name: profile.name, jobTitle: profile.title, sameAs: profile.socials.map(({ url }) => url) }
+  ] : [])
+];
+---
+<SiteLayout title={profile.name ? profile.name + ' | ' + profile.seo.title : profile.seo.title} structuredData={structuredData}>
+  <Hero />
+  <ProjectShowcase />
+  <ProfileSections />
+  <Contact />
+</SiteLayout>

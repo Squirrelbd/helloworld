@@ -1,0 +1,64 @@
+---
+import '../styles/global.css';
+import { profile } from '../content/profile';
+import { absoluteUrl, withBase } from '../lib/urls';
+import Header from '../components/site/Header.astro';
+import Footer from '../components/site/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  path?: string;
+  image?: string;
+  noindex?: boolean;
+  structuredData?: object[];
+}
+const { title, description = profile.seo.description, path = '', image = profile.seo.image, noindex = false, structuredData = [] } = Astro.props;
+const canonical = absoluteUrl(Astro.site, path);
+const indexable = profile.seo.indexable && !noindex;
+const shareImage = absoluteUrl(Astro.site, image);
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': structuredData }).replaceAll('<', '\\u003c');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <script is:inline>
+      (() => {
+        let theme;
+        try { theme = localStorage.getItem('portfolio-theme'); } catch { /* Storage can be unavailable. */ }
+        if (theme !== 'light' && theme !== 'dark') {
+          theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.classList.add('enhanced');
+      })();
+    </script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {!indexable && <meta name="robots" content="noindex" />}
+    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
+    <meta property="og:type" content={path.startsWith('projects/') ? 'article' : 'website'} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={shareImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={shareImage} />
+    {indexable && structuredData.length > 0 && <script type="application/ld+json" set:html={jsonLd} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main" tabindex="-1"><slot /></main>
+    <Footer />
+    <script>
+      import '../scripts/site';
+    </script>
+  </body>
+</html>

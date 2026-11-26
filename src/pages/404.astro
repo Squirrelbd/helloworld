@@ -1,0 +1,16 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/site/Icon.astro';
+import { withBase } from '../lib/urls';
+---
+<SiteLayout title="Page not found | Embedded Systems & IoT Portfolio" path="404.html" noindex>
+  <section class="wrap error-page">
+    <p class="eyebrow">404</p>
+    <h1>Page not found.</h1>
+    <p>The page may have moved. You can return to the portfolio or browse selected work.</p>
+    <div class="hero-actions">
+      <a class="button button-primary" href={withBase()}>Return home <Icon name="arrow" size={18} /></a>
+      <a class="button button-outline" href={withBase('#projects')}>Selected work</a>
+    </div>
+  </section>
+</SiteLayout>

@@ -1,0 +1,37 @@
+---
+import { profile } from '../../content/profile';
+import Icon from '../site/Icon.astro';
+const endpoint = profile.contactEndpoint && new URL(profile.contactEndpoint);
+if (endpoint && (endpoint.protocol !== 'https:' || endpoint.username || endpoint.password)) {
+  throw new Error('Configure a public HTTPS contact endpoint without embedded credentials.');
+}
+---
+<section id="contact" class="section contact-section">
+  <div class="wrap contact-card">
+    <div>
+      <p class="eyebrow">Contact</p>
+      <h2>Get in touch.</h2>
+      {(endpoint || profile.email) && <p>For engineering roles, collaborations, or project inquiries.</p>}
+    </div>
+    <div class="contact-actions">
+      {profile.email && <a class="button button-primary" href={'mailto:' + profile.email}>Email {profile.name ?? 'me'} <Icon name="diagonal" size={16} /></a>}
+      {!endpoint && !profile.email && <p>Contact details will be added here.</p>}
+      {profile.socials.length > 0 && <div class="inline-links">{profile.socials.map(({ label, url }) => <a href={url}>{label} ↗</a>)}</div>}
+      {endpoint && (
+        <form class="contact-form" method="post" action={endpoint.href}>
+          <fieldset class="contact-fields" aria-label="Message details">
+            <div class="field-pair">
+              <label>Name<input name="name" autocomplete="name" required maxlength="120" /></label>
+              <label>Email<input name="email" type="email" autocomplete="email" required maxlength="254" /></label>
+            </div>
+            <label>Subject<input name="subject" required maxlength="160" /></label>
+            <label>Message<textarea name="message" rows="4" required maxlength="5000"></textarea></label>
+          </fieldset>
+          <p class="form-note">Your message is sent through the configured form provider. Please leave sensitive information out.</p>
+          <button class="button button-primary" type="submit">Send message <Icon name="arrow" size={17} /></button>
+          <p class="form-status" role="status"></p>
+        </form>
+      )}
+    </div>
+  </div>
+</section>

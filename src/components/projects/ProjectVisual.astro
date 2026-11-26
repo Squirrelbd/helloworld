@@ -1,0 +1,12 @@
+---
+import { stages } from '../../lib/architecture';
+import Icon from '../site/Icon.astro';
+---
+<div class="project-visual" aria-hidden="true">
+  <div class="project-visual-nodes">
+    {stages.map(({ id, label }) => <span>
+      <Icon name={id} size={24} />
+      {id === 'application' ? <><small class="node-full">{label}</small><small class="node-short">App</small></> : <small>{label}</small>}
+    </span>)}
+  </div>
+</div>

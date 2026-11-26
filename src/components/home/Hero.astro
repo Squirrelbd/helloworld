@@ -1,0 +1,25 @@
+---
+import { profile } from '../../content/profile';
+import { withBase } from '../../lib/urls';
+import { publicFile } from '../../lib/public-files';
+import Architecture from './Architecture.astro';
+import Icon from '../site/Icon.astro';
+const resume = publicFile(profile.resume);
+---
+<section id="home" class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="signal-dot" aria-hidden="true"></span>{profile.title ?? 'Embedded systems / IoT'}</p>
+      {profile.name ? <h1>{profile.name}</h1> : <h1>Engineering<br /> from the <em>edge.</em></h1>}
+      <p class="hero-intro">{profile.tagline ?? 'Firmware, connectivity, and the systems that turn signals from the physical world into useful data.'}</p>
+      {profile.location && <p class="hero-location">{profile.location}</p>}
+      <div class="hero-actions">
+        <a href="#projects" class="button button-primary">Explore my work <Icon name="arrow" size={18} /></a>
+        <a href={resume ? withBase(resume) : '#contact'} class="button button-outline"
+          download={resume ? true : undefined}>{resume ? 'Download résumé' : 'Contact'} <Icon name={resume ? 'download' : 'diagonal'} size={16} /></a>
+      </div>
+      {profile.socials.length > 0 && <div class="inline-links">{profile.socials.map(({ label, url }) => <a href={url}>{label} ↗</a>)}</div>}
+    </div>
+    <Architecture />
+  </div>
+</section>

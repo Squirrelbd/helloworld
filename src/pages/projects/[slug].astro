@@ -1,0 +1,53 @@
+---
+import { render } from 'astro:content';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import ProjectVisual from '../../components/projects/ProjectVisual.astro';
+import Icon from '../../components/site/Icon.astro';
+import { profile } from '../../content/profile';
+import { publishedProjects } from '../../lib/projects';
+import { publicFile } from '../../lib/public-files';
+import { absoluteUrl, withBase } from '../../lib/urls';
+
+export async function getStaticPaths() {
+  return (await publishedProjects()).map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+const path = 'projects/' + data.slug + '/';
+const home = absoluteUrl(Astro.site);
+const pageUrl = absoluteUrl(Astro.site, path);
+const imagePath = publicFile(data.image?.path);
+const structuredData = [
+  { '@type': 'CreativeWork', name: data.title, description: data.summary, url: pageUrl },
+  { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: home },
+    { '@type': 'ListItem', position: 2, name: data.title, item: pageUrl }
+  ] }
+];
+---
+<SiteLayout title={data.title + ' | ' + profile.seo.title} description={data.summary} path={path} image={imagePath} structuredData={structuredData}>
+  <article class="case-study">
+    <header class="wrap case-header">
+      <nav aria-label="Breadcrumb" class="breadcrumb"><a href={withBase()}>Home</a><span aria-hidden="true">/</span><a href={withBase('#projects')}>Projects</a><span aria-hidden="true">/</span><span aria-current="page">{data.title}</span></nav>
+      <p class="eyebrow">{data.kind === 'reference' ? 'Conceptual reference design' : data.category}</p>
+      <h1>{data.title}</h1>
+      <p class="case-summary">{data.summary}</p>
+      {data.tags.length > 0 && <ul class="tag-list">{data.tags.map((tag) => <li>{tag}</li>)}</ul>}
+      {(data.repository || data.demo) && <div class="inline-links">
+        {data.repository && <a href={data.repository}>Source repository ↗</a>}
+        {data.demo && <a href={data.demo}>View demonstration ↗</a>}
+      </div>}
+    </header>
+    <div class="wrap case-media">
+      {imagePath && data.image
+        ? <img src={withBase(imagePath)} width={data.image.width} height={data.image.height} alt={data.image.alt} />
+        : <ProjectVisual />}
+    </div>
+    <div class="case-body">
+      <Content />
+      <a class="text-link" href={withBase('#projects')}>Back to selected work <Icon name="arrow" size={17} /></a>
+    </div>
+  </article>
+</SiteLayout>
