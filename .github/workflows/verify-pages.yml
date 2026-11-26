@@ -1,0 +1,59 @@
+name: Verify public portfolio
+
+on:
+  push:
+    branches: [codex/engineering-portfolio]
+    paths:
+      - "docs/**"
+      - ".github/workflows/verify-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-urls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Check homepage and résumé over public HTTPS
+        env:
+          SITE_URL: https://squirrelbd.github.io/helloworld/
+        run: |
+          set -eu
+          resume=assets/files/md-amirul-islam-resume.pdf
+          scratch="$(mktemp -d)"
+          trap 'rm -rf -- "$scratch"' EXIT
+
+          check_site() {
+            curl -fsSL --connect-timeout 8 --max-time 15 "${SITE_URL}" -o "$scratch/index.html" &&
+              cmp -s docs/index.html "$scratch/index.html" &&
+              curl -fsSL --connect-timeout 8 --max-time 15 "${SITE_URL}assets/js/site.js" -o "$scratch/site.js" &&
+              cmp -s docs/assets/js/site.js "$scratch/site.js"
+          }
+
+          check_resume() {
+            curl -fsSIL --connect-timeout 8 --max-time 15 "${SITE_URL}$resume" -o "$scratch/headers" &&
+              grep -qi '^content-type: application/pdf' "$scratch/headers" &&
+              curl -fsSL --connect-timeout 8 --max-time 15 "${SITE_URL}$resume" -o "$scratch/resume.pdf" &&
+              cmp -s "docs/$resume" "$scratch/resume.pdf"
+          }
+
+          for attempt in {1..12}; do
+            site_ok=0
+            resume_ok=0
+            if check_site; then site_ok=1; fi
+            if check_resume; then resume_ok=1; fi
+            if [ "$site_ok$resume_ok" = 11 ]; then
+              echo "Public homepage and JavaScript match the repository."
+              echo "Public résumé serves application/pdf and matches the committed file."
+              exit 0
+            fi
+            echo "Attempt $attempt: homepage=$site_ok résumé=$resume_ok"
+            if [ "$attempt" -lt 12 ]; then sleep 8; fi
+          done
+          echo "::error::Public Pages content did not match the repository or could not be fetched."
+          exit 1
