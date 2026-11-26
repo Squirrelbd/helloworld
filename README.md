@@ -33,7 +33,7 @@ See [the content guide](CONTENT_GUIDE.md) for examples, [the implementation plan
 1. Replace the marked identity and biography placeholders. Replace or hide illustrative projects and confirm which services and expertise can be advertised publicly.
 2. Add the approved contact email and social URLs. Keep `contact.mode` set to `email` to prepare drafts in the visitor's mail app. An approved HTTPS service is optional and can be configured later.
 3. Add a public résumé PDF to `docs/assets/files/resume.pdf` and set `resume.path` to `assets/files/resume.pdf`. The download only appears if the path serves a PDF.
-4. Review the title, description, canonical, sharing image, `robots.txt`, `sitemap.xml`, and `404.html` against the final destination. Remove the preview's `noindex` only after the public copy is approved.
+4. Review the title, description, canonical, sharing image, and sitemap against the final destination. The homepage allows indexing. The recovery page retains its `noindex` directive.
 
 ## Publish on GitHub Pages
 

@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v6
         with:
           persist-credentials: false
-      - name: Check homepage and résumé over public HTTPS
+      - name: Check homepage, résumé, and sitemap over public HTTPS
         env:
           SITE_URL: https://squirrelbd.github.io/helloworld/
         run: |
@@ -29,8 +29,9 @@ jobs:
           trap 'rm -rf -- "$scratch"' EXIT
 
           check_site() {
-            curl -fsSL --connect-timeout 8 --max-time 15 "${SITE_URL}" -o "$scratch/index.html" &&
+            curl -fsSL --connect-timeout 8 --max-time 15 "${SITE_URL}" -D "$scratch/home-headers" -o "$scratch/index.html" &&
               cmp -s docs/index.html "$scratch/index.html" &&
+              ! grep -Eqi '^x-robots-tag:.*noindex' "$scratch/home-headers" &&
               curl -fsSL --connect-timeout 8 --max-time 15 "${SITE_URL}assets/js/site.js" -o "$scratch/site.js" &&
               cmp -s docs/assets/js/site.js "$scratch/site.js"
           }
@@ -42,17 +43,33 @@ jobs:
               cmp -s "docs/$resume" "$scratch/resume.pdf"
           }
 
+          check_sitemap() {
+            curl -fsSL --connect-timeout 8 --max-time 15 "${SITE_URL}sitemap.xml" -o "$scratch/sitemap.xml" &&
+              cmp -s docs/sitemap.xml "$scratch/sitemap.xml" &&
+              python3 -c 'import sys, xml.etree.ElementTree as ET; root = ET.parse(sys.argv[1]).getroot(); ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}; assert root.tag == "{http://www.sitemaps.org/schemas/sitemap/0.9}urlset"; assert sys.argv[2] in [loc.text for loc in root.findall("s:url/s:loc", ns)]' "$scratch/sitemap.xml" "$SITE_URL" &&
+              curl -fsSL --connect-timeout 8 --max-time 15 "${SITE_URL}robots.txt" -o "$scratch/robots.txt" &&
+              grep -Fxq "Sitemap: ${SITE_URL}sitemap.xml" "$scratch/robots.txt"
+          }
+
           for attempt in {1..12}; do
             site_ok=0
             resume_ok=0
+            sitemap_ok=0
             if check_site; then site_ok=1; fi
             if check_resume; then resume_ok=1; fi
-            if [ "$site_ok$resume_ok" = 11 ]; then
-              echo "Public homepage and JavaScript match the repository."
+            if check_sitemap; then sitemap_ok=1; fi
+            if [ "$site_ok$resume_ok$sitemap_ok" = 111 ]; then
+              echo "Public homepage and JavaScript match the repository, with no noindex response header."
               echo "Public résumé serves application/pdf and matches the committed file."
+              echo "Public sitemap is valid XML, lists the canonical homepage, and matches the project robots.txt reference."
+              root_robots_status="$(curl -sSL --connect-timeout 8 --max-time 15 -w '%{http_code}' -o "$scratch/root-robots" https://squirrelbd.github.io/robots.txt)"
+              echo "Host-level robots.txt returned HTTP $root_robots_status."
+              if [ "$root_robots_status" = 200 ]; then
+                grep -Ei '^[[:space:]]*(user-agent|allow|disallow|sitemap):' "$scratch/root-robots" || true
+              fi
               exit 0
             fi
-            echo "Attempt $attempt: homepage=$site_ok résumé=$resume_ok"
+            echo "Attempt $attempt: homepage=$site_ok résumé=$resume_ok sitemap=$sitemap_ok"
             if [ "$attempt" -lt 12 ]; then sleep 8; fi
           done
           echo "::error::Public Pages content did not match the repository or could not be fetched."
