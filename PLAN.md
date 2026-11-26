@@ -30,6 +30,8 @@ Use centralized placeholders for unconfirmed identity or experience. Show illust
 
 Use the engineering résumés for the byline, biography, work history, education, expertise, and professional profiles. The local preview includes the owner-supplied portrait, the reviewed public résumé, and the corrected BDRO and IRO mentoring credit. Its project summaries cover production monitoring, cold-chain telemetry, and equipment integration. Describe collaboration in terms of demonstrated capabilities. Use LinkedIn for inquiries while a public email address or form provider is unspecified. Confirm case-study details before public release.
 
+Use industrial machine monitoring, energy monitoring, and IoT-based cold chain management in the homepage introduction and search description. List building management systems, queue management systems, and trip management as areas of collaboration. Add case studies when the owner provides project details.
+
 Use system preferences and localStorage for theme, with an in-memory fallback. Manage mobile menu focus, Escape dismissal, active anchors, and keyboard and touch interactions. Pending résumés and socials have explanatory states. Optional links and visual assets are validated before rendering. The contact form validates locally, prepares a message in the visitor's email app once a public address is configured, and supports an approved HTTPS form service as an optional mode.
 
 ## Verification and deployment

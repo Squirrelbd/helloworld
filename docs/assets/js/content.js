@@ -4,7 +4,7 @@ export const content = {
     name: 'Md. Amirul Islam',
     title: 'Embedded Systems & Industrial IoT Engineer',
     tagline: { lead: 'Connecting machines,', accent: 'devices & data.' },
-    introduction: 'I develop embedded hardware and firmware for production monitoring, cold-chain telemetry, and remote diagnostics.',
+    introduction: 'I develop embedded hardware and firmware for industrial machine monitoring, energy monitoring, and IoT-based cold chain management.',
     biography: 'I’m a senior embedded systems engineer at B-Trac Solutions. I work across hardware and firmware, from bringing up prototypes to integrating equipment and testing devices in the field.',
     about: 'My work includes sensor interfaces and C/C++ firmware on ESP32 and FreeRTOS. I use Modbus RTU and MQTT to connect equipment to monitoring systems, and I review firmware and mentor engineers.',
     location: '',
@@ -14,7 +14,7 @@ export const content = {
   expertise: [
     { title: 'Embedded hardware', description: 'Sensor and peripheral interfaces, prototype bring-up, and bench testing.', icon: 'prototype' },
     { title: 'Embedded firmware', description: 'C/C++ firmware on ESP32 and FreeRTOS, with I²C, SPI, and UART peripherals.', icon: 'chip' },
-    { title: 'Industrial automation', description: 'Integrating equipment and collecting data over Modbus RTU and RS-485.', icon: 'machine' },
+    { title: 'Industrial automation', description: 'Machine and energy meter integration using industrial interfaces such as Modbus RTU and RS-485.', icon: 'machine' },
     { title: 'Production monitoring', description: 'RFID-based data collection, target-versus-actual tracking, and quality workflows.', icon: 'pulse' },
     { title: 'Industrial IoT', description: 'Remote telemetry over MQTT using Wi-Fi, Ethernet, and GSM.', icon: 'network' },
     { title: 'IoT platforms', description: 'Device integration with Raspberry Pi, Node-RED, REST APIs, and PostgreSQL.', icon: 'platform' }
@@ -75,7 +75,7 @@ export const content = {
       id: 'industrial-iot-gateway',
       title: 'Industrial IoT gateway',
       category: 'Industrial IoT',
-      description: 'Industrial equipment integration for remote monitoring and device configuration.',
+      description: 'Connect equipment for remote industrial machine monitoring and device configuration.',
       features: ['Equipment data collection', 'Remote telemetry'],
       technologies: ['Modbus RTU', 'RS-485'],
       visual: 'platform',
@@ -88,7 +88,7 @@ export const content = {
       id: 'cold-chain-monitoring',
       title: 'Cold-chain temperature monitoring',
       category: 'Embedded systems',
-      description: 'Temperature telemetry for refrigerated transport and cold storage.',
+      description: 'IoT-based cold chain management with remote temperature monitoring for refrigerated transport and cold storage.',
       features: ['Temperature acquisition', 'Remote monitoring'],
       technologies: ['ESP32', 'MQTT'],
       visual: 'device',
@@ -99,8 +99,11 @@ export const content = {
     }
   ],
   services: [
-    { title: 'Production monitoring', description: 'Integrate production events and quality data so teams can track line output against targets.', capabilities: ['RFID', 'Production data integration'], icon: 'machine' },
-    { title: 'Industrial IoT integration', description: 'Connect equipment and sensors to remote monitoring and alerting systems.', capabilities: ['Modbus RTU', 'MQTT'], icon: 'network' },
+    { title: 'Industrial machine monitoring', description: 'Collect machine status and production data for remote equipment monitoring and line performance tracking.', capabilities: ['Industrial IoT', 'Modbus RTU', 'Production monitoring'], icon: 'machine' },
+    { title: 'Energy monitoring & building management', description: 'Bring energy meter readings, environmental sensors, and equipment status into dashboards for energy monitoring and building management systems (BMS).', capabilities: ['Energy metering', 'Facility monitoring', 'Operational dashboards'], icon: 'platform' },
+    { title: 'IoT-based cold chain management', description: 'Track temperatures in cold storage and refrigerated transport using connected sensors and remote telemetry.', capabilities: ['Temperature monitoring', 'Refrigerated transport', 'MQTT'], icon: 'network' },
+    { title: 'Queue management systems', description: 'Track queues as they move through service counters and make wait times visible to staff.', capabilities: ['Queue status', 'Wait-time reporting'], icon: 'pulse' },
+    { title: 'Trip management', description: 'Give operations teams a single view of trip status, scheduled stops, and completed journeys.', capabilities: ['Trip tracking', 'Transport operations'], icon: 'platform' },
     { title: 'Embedded device development', description: 'Develop embedded hardware and firmware for connected devices, from sensor bring-up through field testing.', capabilities: ['Hardware prototyping', 'ESP32', 'C/C++'], icon: 'chip' }
   ],
   resume: { path: 'assets/files/md-amirul-islam-resume.pdf', preview: true },

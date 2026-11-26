@@ -28,6 +28,10 @@ test('loads the complete portfolio with the portrait and reviewed résumé', asy
     tags.map((tag) => getComputedStyle(tag, '::before').content)
   )).toEqual(['none', 'none', 'none', 'none', 'none']);
   await expect(page.locator('#projects + #services')).toHaveCount(1);
+  const services = page.locator('#services-grid');
+  for (const term of ['Industrial machine monitoring', 'Energy monitoring', 'building management systems (BMS)', 'IoT-based cold chain management', 'Queue management systems', 'Trip management']) {
+    await expect(services).toContainText(term);
+  }
   const portrait = page.getByRole('img', { name: 'Portrait of Md. Amirul Islam' });
   await expect(portrait).toHaveJSProperty('naturalWidth', 576);
   await expect(page.locator('#portrait')).toHaveClass(/has-image/);
