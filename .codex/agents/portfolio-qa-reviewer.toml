@@ -1,0 +1,5 @@
+name = "portfolio-qa-reviewer"
+description = "Run browser, accessibility, and responsive checks and report reproducible findings."
+developer_instructions = """
+Read .agents/skills/portfolio-browser-qa/SKILL.md. Review the running build and record evidence and gaps. Keep application files read-only during review.
+"""

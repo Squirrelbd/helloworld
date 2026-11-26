@@ -1,0 +1,88 @@
+@font-face {
+  font-family: 'Space Grotesk Variable';
+  src: url('@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2') format('woff2');
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Variable';
+  src: url('@fontsource-variable/inter/files/inter-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('@fontsource/ibm-plex-mono/files/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --bg: #f7f9fb;
+  --surface: #fff;
+  --surface-subtle: #edf3f6;
+  --ink: #101d2b;
+  --muted: #4d5c6d;
+  --line: #cbd7df;
+  --control-line: #687c8b;
+  --accent: #006880;
+  --accent-strong: #07566b;
+  --on-accent: #fff;
+  --accent-soft: #dceff3;
+  --focus: #006d83;
+  --header: #f7f9fb;
+  --board-bg: #10212d;
+  --board-ink: #edfaff;
+  --board-muted: #c0d7e0;
+  --board-line: #48616f;
+  --board-accent: #a9f1ed;
+  --shadow: 0 18px 52px -26px rgb(16 44 59 / 36%);
+  --font-display: 'Space Grotesk Variable', 'Segoe UI', sans-serif;
+  --font-body: 'Inter Variable', 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', Consolas, monospace;
+  --container: 1240px;
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --radius: 1rem;
+  --radius-control: .55rem;
+  --header-height: 4.7rem;
+  --fast: 160ms;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: #0b1320;
+    --surface: #111e2b;
+    --surface-subtle: #162635;
+    --ink: #eff5fa;
+    --muted: #b2c1cf;
+    --line: #344757;
+    --control-line: #758a9b;
+    --accent: #7ee2ed;
+    --accent-strong: #8ee8ee;
+    --on-accent: #09212a;
+    --accent-soft: #173844;
+    --focus: #7ee2ed;
+    --header: #0b1320;
+    --shadow: 0 18px 52px -26px rgb(0 0 0 / 55%);
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0b1320;
+  --surface: #111e2b;
+  --surface-subtle: #162635;
+  --ink: #eff5fa;
+  --muted: #b2c1cf;
+  --line: #344757;
+  --control-line: #758a9b;
+  --accent: #7ee2ed;
+  --accent-strong: #8ee8ee;
+  --on-accent: #09212a;
+  --accent-soft: #173844;
+  --focus: #7ee2ed;
+  --header: #0b1320;
+  --shadow: 0 18px 52px -26px rgb(0 0 0 / 55%);
+}

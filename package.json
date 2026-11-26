@@ -1,0 +1,40 @@
+{
+  "name": "engineering-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "python -m http.server 4321 --bind 127.0.0.1 --directory docs",
+    "lint": "eslint .",
+    "test:artifact": "node --test tests/static-portfolio.test.mjs",
+    "test:e2e": "playwright test --config playwright.static.config.ts",
+    "test": "npm run test:artifact && npm run test:e2e",
+    "legacy:dev": "astro dev",
+    "legacy:check": "astro check",
+    "legacy:build": "astro build",
+    "legacy:preview": "astro preview",
+    "legacy:test": "node --test tests/artifact.test.mjs && playwright test tests/portfolio.spec.ts",
+    "legacy:test:fixtures": "node tests/run-fixtures.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "astro": "^7.4.13"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@axe-core/playwright": "^4.14.1",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.11",
+    "eslint": "^10.15.0",
+    "eslint-plugin-astro": "^1.7.0",
+    "lighthouse": "^13.6.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.74.0"
+  }
+}

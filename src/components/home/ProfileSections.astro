@@ -1,0 +1,88 @@
+---
+import { profile } from '../../content/profile';
+import { publicFile } from '../../lib/public-files';
+import { projectHref, withBase } from '../../lib/urls';
+import { publishedProjects } from '../../lib/projects';
+import Icon from '../site/Icon.astro';
+
+const projectSlugs = new Set((await publishedProjects()).map(({ data }) => data.slug));
+const portrait = profile.portrait && publicFile(profile.portrait.path);
+const areas = [
+  { title: 'Embedded systems', description: 'How sensor inputs, timing, and device constraints shape the firmware that runs in the field.', icon: 'device' },
+  { title: 'Connectivity', description: 'How data crosses a network, recovers from interruptions, and reaches the right destination.', icon: 'gateway' },
+  { title: 'IoT platforms', description: 'How ingestion and application layers turn raw readings into useful, timely information.', icon: 'application' }
+];
+---
+{profile.bio && (
+  <section id="about" class="section">
+    <div class="wrap section-intro">
+      <div><p class="eyebrow">Profile</p><h2>About</h2><p>{profile.bio}</p></div>
+      {portrait && profile.portrait && <img class="portrait" src={withBase(portrait)} alt={profile.portrait.alt} width={profile.portrait.width} height={profile.portrait.height} loading="lazy" decoding="async" />}
+    </div>
+  </section>
+)}
+<section id="expertise" class="section expertise-section">
+  <div class="wrap">
+    <div class="section-intro">
+      <div><p class="eyebrow">{profile.expertise.length ? 'Expertise' : 'Engineering focus'}</p><h2>From hardware to application.</h2></div>
+      <p>Connected systems bring together work at the device, network, and application layers.</p>
+    </div>
+    {profile.expertise.length ? (
+      <div class="expertise-grid">
+        {profile.expertise.map(({ title, description, technologies }) => <article class="expertise-item">
+          <h3>{title}</h3><p>{description}</p><ul class="tag-list">{technologies.map((tech) => <li>{tech}</li>)}</ul>
+        </article>)}
+      </div>
+    ) : (
+      <div class="expertise-grid">
+        {areas.map(({ title, description, icon }) => <article class="expertise-item">
+          <span class="expertise-icon"><Icon name={icon} size={24} /></span><h3>{title}</h3><p>{description}</p>
+        </article>)}
+      </div>
+    )}
+  </div>
+</section>
+{profile.experience.length > 0 && (
+  <section id="experience" class="section">
+    <div class="wrap">
+      <div class="section-intro"><h2>Experience</h2></div>
+      <ol class="timeline">
+        {profile.experience.map((entry) => (
+          <li><p class="eyebrow">{entry.period}</p><div>
+            <h3>{entry.position}</h3><p class="entry-meta">{entry.organization}{entry.location ? ' · ' + entry.location : ''}</p>
+            <p>{entry.summary}</p>
+            {entry.contributions?.length && <ul>{entry.contributions.map((item) => <li>{item}</li>)}</ul>}
+            {entry.technologies?.length && <ul class="tag-list">{entry.technologies.map((item) => <li>{item}</li>)}</ul>}
+            {entry.projectSlugs?.filter((slug) => projectSlugs.has(slug)).map((slug) => <a href={projectHref(slug)}>View related project ↗</a>)}
+          </div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+)}
+{profile.education.length > 0 && (
+  <section id="education" class="section">
+    <div class="wrap">
+      <div class="section-intro"><h2>Education &amp; credentials</h2></div>
+      <ol class="timeline">
+        {profile.education.map(({ institution, qualification, period, details }) => (
+          <li><p class="eyebrow">{period}</p><div><h3>{qualification}</h3><p class="entry-meta">{institution}</p>{details && <p>{details}</p>}</div></li>
+        ))}
+      </ol>
+    </div>
+  </section>
+)}
+{profile.services.length > 0 && (
+  <section id="services" class="section">
+    <div class="wrap">
+      <div class="section-intro"><div><p class="eyebrow">Work together</p><h2>Services</h2></div></div>
+      <div class="expertise-grid">
+        {profile.services.map(({ title, description, deliverables }) => <article class="expertise-item">
+          <h3>{title}</h3><p>{description}</p>
+          {deliverables?.length && <ul>{deliverables.map((item) => <li>{item}</li>)}</ul>}
+          <a class="text-link" href="#contact">Discuss a project <Icon name="diagonal" size={14} /></a>
+        </article>)}
+      </div>
+    </div>
+  </section>
+)}

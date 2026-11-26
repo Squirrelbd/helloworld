@@ -1,0 +1,17 @@
+---
+import { profile } from '../../content/profile';
+import { withBase } from '../../lib/urls';
+import Icon from './Icon.astro';
+---
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <a class="brand" href={withBase()}><span class="brand-mark"><Icon name="chip" size={21} /></span>{profile.name ?? 'Embedded Engineering'}</a>
+    <p>{profile.tagline ?? 'Embedded systems & connected devices'}</p>
+    <div class="footer-links">
+      {profile.socials.map(({ label, url }) => <a href={url}>{label}</a>)}
+      {profile.email && <a href={'mailto:' + profile.email}>Email</a>}
+      <a href={withBase('#home')}>Back to top ↑</a>
+      <span>© {new Date().getUTCFullYear()}{profile.name ? ' ' + profile.name : ''}</span>
+    </div>
+  </div>
+</footer>

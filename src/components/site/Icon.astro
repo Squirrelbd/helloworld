@@ -1,0 +1,20 @@
+---
+interface Props { name: string; size?: number; }
+const { name, size = 20 } = Astro.props;
+const icons: Record<string, string> = {
+  chip: 'M9 3v3m6-3v3M9 18v3m6-3v3M3 9h3m-3 6h3m12-6h3m-3 6h3M7 6h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Zm3 4h4v4h-4z',
+  sensor: 'M2 12h5l3-7 4 14 3-7h5',
+  device: 'M9 3v3m6-3v3M9 18v3m6-3v3M3 9h3m-3 6h3m12-6h3m-3 6h3M6 6h12v12H6z',
+  gateway: 'M3 9a14 14 0 0 1 18 0M6 12a9 9 0 0 1 12 0m-9 3a4 4 0 0 1 6 0m-3 3h.01',
+  cloud: 'M6 18a4 4 0 1 1 1-7.9A5 5 0 0 1 17 11a3.5 3.5 0 0 1 0 7Z',
+  application: 'M3 5h18v12H3zm5 15h8m-4-3v3M7 13l3-3 2 2 4-4',
+  arrow: 'M4 12h15m-6-6 6 6-6 6',
+  diagonal: 'M6 18 18 6M8 6h10v10',
+  down: 'M12 4v15m-6-6 6 6 6-6',
+  moon: 'M20.9 13.3A9 9 0 1 1 10.7 3.1a7.5 7.5 0 0 0 10.2 10.2Z',
+  sun: 'M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z',
+  menu: 'M4 7h16M4 12h16M4 17h16',
+  download: 'M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4'
+};
+---
+<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={icons[name]} /></svg>

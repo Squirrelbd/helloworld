@@ -1,0 +1,46 @@
+---
+import { stages } from '../../lib/architecture';
+import { projectHref, withBase } from '../../lib/urls';
+import { publishedProjects } from '../../lib/projects';
+import Icon from '../site/Icon.astro';
+const projects = await publishedProjects();
+---
+<figure class="architecture" id="architecture">
+  <figcaption class="architecture-caption">
+    <span>Signal path</span><span class="caption-detail"><span aria-hidden="true"></span> Conceptual architecture</span>
+  </figcaption>
+  <div class="architecture-visual">
+    <picture>
+      <source media="(max-width: 560px)" srcset={withBase('circuit-board-small.webp')} />
+      <img src={withBase('circuit-board.webp')} width="1050" height="700" alt="" fetchpriority="high" decoding="async" />
+    </picture>
+    <div class="architecture-scrim"></div>
+    <div class="board-center" aria-hidden="true">
+      <svg viewBox="0 0 440 140" fill="none">
+        <path d="M26 97h75l37-37h55m52 0h53l29 37h87" stroke="currentColor" stroke-width="1" stroke-dasharray="3 5" />
+        <path d="M26 97h75l37-37h55m52 0h53l29 37h87" stroke="#93e5f1" stroke-width="1.8" pathLength="100" class="telemetry-pulse" />
+        <path d="M198 37h-12v12m57-12h12v12m-57 36h-12V73m57 12h12V73" stroke="currentColor" stroke-width="1.5" />
+        <circle cx="26" cy="97" r="4" fill="#91e7df" /><circle cx="414" cy="97" r="4" fill="#91e7df" />
+      </svg>
+    </div>
+    <div class="architecture-console">
+      <div class="stage-list" role="group" aria-label="Choose a stage">
+        {stages.map(({ id, label }, index) => (
+          <button type="button" data-stage={id} aria-pressed={index === 0 ? 'true' : 'false'}>
+            <Icon name={id} size={19} /><span>{label}</span>
+          </button>
+        ))}
+      </div>
+      <div class="stage-details" aria-live="polite">
+        {stages.map(({ id, label, detail }) => (
+          <p data-stage-detail={id}>
+            <strong>{label}</strong> <span>{detail}</span>
+            {projects.filter(({ data }) => data.stages.includes(id)).map(({ data }) => (
+              <a class="stage-project" href={projectHref(data.slug)}>{data.title} ↗</a>
+            ))}
+          </p>
+        ))}
+      </div>
+    </div>
+  </div>
+</figure>
