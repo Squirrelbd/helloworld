@@ -57,27 +57,6 @@ export const content = {
       overview: 'Worked on microcontroller-based robotics projects and delivered hands-on robotics training.'
     }
   ],
-  // Education fields include institution, qualification, field, duration, location,
-  // coursework, thesis, research and achievements.
-  education: [
-    { institution: 'Daffodil International University', qualification: 'B.Sc. in Computer Science & Engineering', duration: '2016' }
-  ],
-  // Certification fields include title, issuer, issued, expires, credentialId,
-  // verificationUrl, image, domain and description.
-  certifications: [],
-  achievements: [
-    {
-      title: 'Robotics team mentoring',
-      issuer: 'BDRO and IRO',
-      description: 'Mentored robotics teams that won gold medals at BDRO and IRO.'
-    },
-    {
-      title: 'IoT-Based Robot with Wireless and Voice Recognition Mode',
-      issuer: 'IEMIS',
-      issued: '2018',
-      description: 'Co-authored the research paper.'
-    }
-  ],
   projects: [
     {
       id: 'production-monitoring',

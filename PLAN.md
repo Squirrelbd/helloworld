@@ -20,7 +20,7 @@ Publish the static files in `docs/`. GitHub Pages can serve that directory direc
 
 ## Design and information hierarchy
 
-Use the supplied visual as a layout reference. Start with a slate and blue-teal palette, a compact sticky header, strong editorial type, and a split hero with visibly connected engineering nodes. Use a light theme with its own surface and contrast tokens. Move from the hero into About, expertise, experience, featured projects, education, certifications and achievements, services, résumé, contact, and the footer. Keep education and credentials distinct while pairing them on wider screens. On phones, stack the hero and invert the topology into a compact vertical reading sequence. Use a timeline for experience and visibly differentiated engineering diagrams for project cards.
+Use the supplied visual as a layout reference. Start with a slate and blue-teal palette, a compact sticky header, strong editorial type, and a split hero with visibly connected engineering nodes. Use a light theme with its own surface and contrast tokens. Move from the hero into About, expertise, experience, featured projects, services, résumé, contact, and the footer. On phones, stack the hero and invert the topology into a compact vertical reading sequence. Use a timeline for experience and visibly differentiated engineering diagrams for project cards.
 
 The hero's SVG and text explain the conceptual path from machines and sensors through controllers, communications, edge, IoT platform, monitoring, and operational insight. Use a brief moving packet and accent the downstream platform and insight nodes. Use gentle, bounded entrances and interaction transitions with reduced-motion support and visible content when scripts are unavailable.
 
@@ -33,6 +33,8 @@ Use the engineering résumés for the byline, biography, work history, education
 Use system preferences and localStorage for theme, with an in-memory fallback. Manage mobile menu focus, Escape dismissal, active anchors, and keyboard and touch interactions. Pending résumés and socials have explanatory states. Optional links and visual assets are validated before rendering. The contact form validates locally, prepares a message in the visitor's email app once a public address is configured, and supports an approved HTTPS form service as an optional mode.
 
 ## Verification and deployment
+
+Verify that Featured projects lead directly into Engineering services after removing the academic record and certifications and achievements sections.
 
 Keep timeline markers scoped to experience entries. Separate role, employer, and dates visually, wrap technology tags on narrow screens, and label links from experience to project case studies.
 

@@ -62,10 +62,10 @@
 .about-lead { max-width: 58ch; font-size: clamp(1.06rem, 2.25vw, 1.35rem); font-weight: 650; line-height: 1.48; }
 .about-lead + p { max-width: 68ch; margin-top: .55rem; }
 .skills-grid, .services-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .7rem; }
-.skill-card, .service-card, .record-card { background: var(--surface); border: 1px solid var(--line); border-radius: .6rem; padding: clamp(.9rem, 1.7vw, 1.25rem); min-width: 0; }
+.skill-card, .service-card { background: var(--surface); border: 1px solid var(--line); border-radius: .6rem; padding: clamp(.9rem, 1.7vw, 1.25rem); min-width: 0; }
 .skill-card h3, .service-card h3 { display: flex; align-items: center; gap: .5rem; font-size: 1.12rem; text-wrap: wrap; }
 .domain-icon { width: 1.6rem; height: 1.6rem; padding: .18rem; border: 1px solid var(--line); border-radius: .28rem; background: var(--accent-soft); color: var(--teal); fill: none; stroke: currentColor; stroke-width: 1.55; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-.skill-card p, .service-card p, .record-card p { color: var(--muted); font-size: .88rem; margin-top: .37rem; }
+.skill-card p, .service-card p { color: var(--muted); font-size: .88rem; margin-top: .37rem; }
 .service-card { display: flex; flex-direction: column; align-items: flex-start; }
 .service-card > .tags { margin-block: .65rem; }
 .service-card > a { display: inline-flex; align-items: center; min-height: 2.75rem; margin-top: auto; font-size: .88rem; font-weight: 650; }
@@ -85,11 +85,6 @@
 .role-project { display: flex; align-items: center; width: fit-content; min-height: 2.75rem; margin-top: .15rem; font-size: .88rem; font-weight: 650; }
 .role-project:hover { text-decoration-thickness: 2px; }
 .timeline img { width: 3.1rem; height: 3.1rem; object-fit: contain; margin-bottom: .45rem; }
-.record-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(.8rem, 3vw, 1.5rem); }
-.record-grid h2 { font-size: clamp(1.68rem, 3.2vw, 2.75rem); }
-.record-card h3 { line-height: 1.22; text-wrap: wrap; }
-.record-card + .record-card { border-top-color: var(--diagram-wire); }
-.record-card + .record-card { margin-top: .65rem; }
 
 .filters { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: .75rem; }
 .filters button { min-height: 2.75rem; padding: .35rem .69rem; background: var(--surface); border: 1px solid var(--control); border-radius: .42rem; color: var(--ink); font-size: .83rem; }
@@ -170,7 +165,7 @@
   .mobile-flow li:nth-child(4) { --node-order: 3; } .mobile-flow li:nth-child(5) { --node-order: 4; }
   .mobile-flow li:nth-child(6) { --node-order: 5; } .mobile-flow li:nth-child(7) { --node-order: 6; }
   @keyframes flow-highlight { 28% { background: var(--accent-soft); } }
-  .project-grid, .record-grid, .services-grid, .form-row { grid-template-columns: 1fr; }
+  .project-grid, .services-grid, .form-row { grid-template-columns: 1fr; }
   .about-card { grid-template-columns: 1fr; }
   .about-card .portrait { width: 6.5rem; }
   .service-card { padding: .8rem; }

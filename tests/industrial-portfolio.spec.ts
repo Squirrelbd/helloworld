@@ -16,7 +16,7 @@ test('loads the complete portfolio with the portrait and reviewed résumé', asy
   await expect(page.locator('#hero-intro')).toContainText('embedded hardware and firmware');
   await expect(page.getByRole('heading', { name: 'Embedded hardware' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Embedded firmware' })).toBeVisible();
-  for (const title of ['About me', 'Engineering expertise', 'Work experience', 'Featured projects', 'Education', 'Certifications & achievements', 'Engineering services', 'Résumé / CV', 'Let’s connect.']) {
+  for (const title of ['About me', 'Engineering expertise', 'Work experience', 'Featured projects', 'Engineering services', 'Résumé / CV', 'Let’s connect.']) {
     await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
   }
   await expect(page.locator('.project-card')).toHaveCount(3);
@@ -27,11 +27,10 @@ test('loads the complete portfolio with the portrait and reviewed résumé', asy
   expect(await currentRole.locator('.tags > li').evaluateAll((tags) =>
     tags.map((tag) => getComputedStyle(tag, '::before').content)
   )).toEqual(['none', 'none', 'none', 'none', 'none']);
-  await expect(page.getByRole('heading', { name: /Daffodil International University/ })).toBeVisible();
+  await expect(page.locator('#projects + #services')).toHaveCount(1);
   const portrait = page.getByRole('img', { name: 'Portrait of Md. Amirul Islam' });
   await expect(portrait).toHaveJSProperty('naturalWidth', 576);
   await expect(page.locator('#portrait')).toHaveClass(/has-image/);
-  await expect(page.getByText('Mentored robotics teams that won gold medals at BDRO and IRO.')).toBeVisible();
   await expect(page.getByRole('link', { name: 'View PDF' })).toHaveAttribute('href', './assets/files/md-amirul-islam-resume.pdf');
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('link', { name: 'Download résumé' }).click();
@@ -208,16 +207,12 @@ test('renders configured editorial fields and a valid portrait', async ({ page }
   await configure(page, `content.profile.name = 'Fixture name';
     content.profile.portrait = {path:'assets/images/mark.svg', alt:'Fixture portrait', width:64, height:64};
     content.experience = [{title:'Fixture position', organization:'Fixture organization', projectIds:['production-monitoring']}];
-    content.education = [{institution:'Fixture academy', qualification:'Fixture degree'}];
-    content.certifications = [{title:'Fixture credential'}];
     content.socials = [{label:'Fixture profile',url:'https://example.invalid/profile'}];`);
   await page.goto('./');
   await expect(page.getByRole('link', { name: 'Fixture name', exact: true })).toHaveCount(2);
   await expect(page.getByRole('img', { name: 'Fixture portrait' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Fixture position' })).toBeVisible();
   await expect(page.getByText('Fixture organization', { exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Fixture degree · Fixture academy' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Fixture credential' })).toBeVisible();
   await expect(page.locator('#footer-socials a')).toHaveAttribute('href', 'https://example.invalid/profile');
 });
 

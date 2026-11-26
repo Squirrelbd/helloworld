@@ -170,30 +170,6 @@ if (roles.length) {
   }));
 }
 
-function renderRecords(id, rows) {
-  if (!rows.length) return;
-  const container = byId(id);
-  container.classList.remove('record-card');
-  container.replaceChildren(...rows.map(({ heading, metadata, lines, asset, href }) => {
-    const record = element('article', 'record-card');
-    record.append(element('h3', '', heading));
-    appendText(record, [metadata.filter(available).join(' · '), ...lines]);
-    const img = image(asset);
-    if (img) record.append(img);
-    if (href) record.append(link('Verify credential ↗', href));
-    return record;
-  }));
-}
-renderRecords('education-list', content.education.filter(({ institution }) => available(institution)).map((entry) => ({
-  heading: [entry.qualification, entry.institution].filter(available).join(' · '),
-  metadata: [entry.field, entry.duration, entry.location],
-  lines: [entry.coursework, entry.thesis, entry.research, entry.achievements]
-})));
-renderRecords('credentials-list', [...content.certifications, ...content.achievements].filter(({ title }) => available(title)).map((entry) => ({
-  heading: entry.title, metadata: [entry.issuer, entry.issued, entry.expires, entry.domain, entry.credentialId],
-  lines: [entry.description], asset: entry.image, href: httpsLink(entry.verificationUrl)
-})));
-
 const resume = localAsset(content.resume.path, ['pdf']);
 if (resume) {
   fetch(resume, { method: 'HEAD' }).then((response) => {

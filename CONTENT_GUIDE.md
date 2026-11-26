@@ -20,8 +20,6 @@ Also update the plain-HTML name, title, introduction, and tagline in `docs/index
 
 - **Expertise.** Replace the example focus areas in `expertise` with approved entries. Each has a `title`, `description`, and optional `technologies` array. Keep `illustrative: true` on any content used solely for layout review.
 - **Experience.** Add entries in display order. Each can contain `title`, `organization`, `organizationLogo`, `period`, `location`, `employmentType`, `overview`, `responsibilities`, `contributions`, `solutions`, `technologies`, `projectIds`, and `achievements`.
-- **Education.** Add an `institution`, `qualification`, `field`, `duration`, `location`, and optional `coursework`, `thesis`, `research`, and `achievements`.
-- **Certifications and achievements.** Use separate `certifications` and `achievements` arrays. Optional properties include `issuer`, `issued`, `expires`, `domain`, `credentialId`, `verificationUrl`, `image`, and `description`. Publish a credential ID only when it is intended to be public.
 - **Services.** Replace proposed entries with approved `title`, `description`, `capabilities` (an array), and `problems` values. Use `machine`, `pulse`, `network`, `chip`, `platform`, or `prototype` for the optional `icon` field in service and expertise cards. The action links to the contact section.
 
 For example, a new experience entry has this shape. Replace the writing prompts with verified details before publishing.
@@ -73,7 +71,7 @@ Set `contact.email` to a public email address. With `mode: 'email'` the form pre
 
 - [ ] Name, designation, tagline, introduction, and biography
 - [ ] Public location and optional portrait
-- [ ] Verified skills, experience, education, credentials, and achievements
+- [ ] Verified skills and experience
 - [ ] Approved project details, links, images, and validation evidence
 - [ ] Confirmed services
 - [ ] Public résumé PDF, email, and public social profiles

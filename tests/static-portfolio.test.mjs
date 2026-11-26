@@ -7,7 +7,7 @@ const read = (path) => readFileSync(new URL(path, directory), 'utf8');
 
 test('delivers all portfolio sections on one HTML page', () => {
   const html = read('index.html');
-  const order = ['home', 'about', 'expertise', 'experience', 'projects', 'education', 'credentials', 'services', 'resume', 'contact'];
+  const order = ['home', 'about', 'expertise', 'experience', 'projects', 'services', 'resume', 'contact'];
   let previous = -1;
   for (const id of order) {
     const current = html.indexOf('id="' + id + '"');
@@ -15,6 +15,7 @@ test('delivers all portfolio sections on one HTML page', () => {
     previous = current;
   }
   assert.ok(!html.includes('/projects/'));
+  assert.doesNotMatch(html, /id="(?:education|credentials)"/);
   assert.doesNotMatch(html, /<meta name="(?:robots|googlebot)"[^>]*content="[^"]*\bnoindex\b/i);
   assert.match(read('404.html'), /<meta name="robots" content="noindex"/);
 });
